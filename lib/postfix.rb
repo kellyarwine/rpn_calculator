@@ -1,10 +1,12 @@
 class Postfix
+  attr_accessor :equation_array, :result
+
   OPERATION_SYMBOLS = ["*","/","-","+"]
 
   def calculate(equation)
     convert_string_to_array(equation)
 
-    while @equation_array.find { |element| element =~ /[\+\-\*\/]/ }
+    while @equation_array & OPERATION_SYMBOLS != []
       calculate_running_total
     end
 
@@ -19,34 +21,28 @@ class Postfix
     @equation_array.each_with_index do |element,index|
       if OPERATION_SYMBOLS.include? element
         operation(element,index)
-        delete_evaluated_elements(index)
+        update_evaluated_elements(index)
         return
       end
     end
   end
 
   def operation(operator,operator_index)
-      operands = [first_operand(operator_index),second_operand(operator_index)]
-      @result = operands.reduce(operator.to_sym)
+    first_operand = @equation_array[first_operand_index(operator_index)].to_i
+    second_operand = @equation_array[second_operand_index(operator_index)].to_i
+    operands = [first_operand,second_operand]
+    @result = operands.reduce(operator.to_sym)
   end
 
   def first_operand_index(operator_index)
     operator_index-2
   end
 
-  def first_operand(operator_index)
-    @equation_array[first_operand_index(operator_index)].to_i
-  end
-
   def second_operand_index(operator_index)
     operator_index-1
   end
 
-  def second_operand(operator_index)
-    @equation_array[second_operand_index(operator_index)].to_i
-  end
-
-  def delete_evaluated_elements(index)
+  def update_evaluated_elements(index)
     @equation_array[index] = @result.to_s
     @equation_array.delete_at(second_operand_index(index))
     @equation_array.delete_at(first_operand_index(index))
