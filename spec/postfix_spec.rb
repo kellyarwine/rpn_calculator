@@ -3,10 +3,11 @@ require 'postfix'
 describe Postfix do
   [
 
+    ["4 5 - 1 + 1 + 1 + -6 *", -12],
+    ["4 3 +", 7],
     ["-4", -4],
     ["4", 4],
     [" 4 ", 4],
-    ["4 3 +", 7],
     ["4 3 -", 1],
     ["4 3 *", 12],
     ["4 3 /", 4/3],
@@ -18,20 +19,12 @@ describe Postfix do
     ["4 5 + 1 + 1 + 1 + 6 *", 72],
     ["4 5 - 1 +", 0],
     ["4 5 - 1 + 1 + 1 +", 2],
-    ["4 5 - 1 + 1 + 1 + -6 *", -12],
 
-  ].each do |expression,result|
+  ].each do |expression,solution|
 
-    it "returns #{result}" do
-      subject.calculate(expression).should == result
+    it "returns #{solution}" do
+      subject.calculate(expression).should == solution
     end
 
-  end
-
-  it "should delete elements" do
-    subject.equation_array = ["4","3","+"]
-    subject.result = 1
-    subject.update_evaluated_elements(2)
-    subject.equation_array = ["7"]
   end
 end

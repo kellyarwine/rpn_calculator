@@ -1,51 +1,28 @@
 class Postfix
-  attr_accessor :equation_array, :result
+  attr_accessor :equation_array, :solution
 
-  OPERATION_SYMBOLS = ["*","/","-","+"]
+  def initialize
+    @solution = []
+  end
 
   def calculate(equation)
-    convert_string_to_array(equation)
-
-    while @equation_array & OPERATION_SYMBOLS != []
-      calculate_running_total
-    end
-
-    @equation_array.first.to_i
-  end
-
-  def convert_string_to_array(string)
-    @equation_array = string.split
-  end
-
-  def calculate_running_total
-    @equation_array.each_with_index do |element,index|
-      if OPERATION_SYMBOLS.include? element
-        operation(element,index)
-        update_evaluated_elements(index)
-        return
+    equation.split(" ").each do |char|
+      if char =~ /\d/
+        stack_push(char)
+      else
+        result = [stack_pop,stack_pop].reverse.reduce(char.to_sym)
+        stack_push(result)
       end
     end
+
+    @solution.first.to_i
   end
 
-  def operation(operator,operator_index)
-    first_operand = @equation_array[first_operand_index(operator_index)].to_i
-    second_operand = @equation_array[second_operand_index(operator_index)].to_i
-    operands = [first_operand,second_operand]
-    @result = operands.reduce(operator.to_sym)
+  def stack_push(operand)
+    @solution.push(operand.to_i)
   end
 
-  def first_operand_index(operator_index)
-    operator_index-2
+  def stack_pop
+    @solution.pop
   end
-
-  def second_operand_index(operator_index)
-    operator_index-1
-  end
-
-  def update_evaluated_elements(index)
-    @equation_array[index] = @result.to_s
-    @equation_array.delete_at(second_operand_index(index))
-    @equation_array.delete_at(first_operand_index(index))
-  end
-
 end
