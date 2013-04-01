@@ -1,8 +1,8 @@
 class Equation
-  attr_accessor :equation_array
+  attr_accessor :components
 
   def initialize(data)
-    @equation_array = data.split(" ")
+    @components = data.split(" ")
   end
 
 end

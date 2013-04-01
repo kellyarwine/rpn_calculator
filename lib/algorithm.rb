@@ -1,24 +1,23 @@
 require 'equation'
-require 'solution'
+require 'stack'
 
 class Algorithm
 
   def initialize
-    @solution = Solution.new
+    @stack = Stack.new
   end
 
   def calculate(equation)
-    equation.equation_array.each do |char|
+    equation.components.each do |char|
       if char =~ /\d/
-        @solution.stack_push(char)
+        @stack.push(char)
       else
-        result = [@solution.stack_pop,@solution.stack_pop].reverse.reduce(char.to_sym)
-        @solution.stack_push(result)
+        result = @stack.pop(2).reverse.reduce(char.to_sym)
+        @stack.push(result)
       end
     end
 
-    @solution.result
+    @stack.pop.first
   end
-
 
 end
