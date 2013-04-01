@@ -1,7 +1,6 @@
-require 'algorithm'
-require 'equation'
+require 'spec_helper'
 
-describe Algorithm do
+describe RPN do
 
   [
     ["4 3 -", 1],

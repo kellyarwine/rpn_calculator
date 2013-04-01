@@ -1,7 +1,7 @@
 require 'equation'
 require 'stack'
 
-class Algorithm
+class RPN
 
   def initialize
     @stack = Stack.new

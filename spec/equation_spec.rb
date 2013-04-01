@@ -1,4 +1,4 @@
-require 'equation'
+require 'spec_helper'
 
 describe Equation do
   let(:data)  { "4 5 - 1 + 1 + 1 + -6 *" }
