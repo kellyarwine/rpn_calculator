@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RPN do
+describe ReversePolishNotation do
 
   [
     ["4 3 -", 1],
@@ -21,10 +21,10 @@ describe RPN do
     ["4 5 - 1 +", 0],
     ["4 5 - 1 + 1 + 1 +", 2],
     ["4 5 - 1 + 1 + 1 + -6 *", -12],
-  ].each do |equation,solution|
-    it "returns #{solution}" do
-      this_equation = Equation.new(equation)
-      subject.calculate(this_equation).should == solution
+  ].each do |data_input,expectation|
+    it "returns #{expectation}" do
+      this_data = DataInput.new(data_input)
+      subject.evaluate(this_data).should == expectation
     end
   end
 

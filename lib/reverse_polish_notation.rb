@@ -1,14 +1,14 @@
-require 'equation'
+require 'data_input'
 require 'stack'
 
-class RPN
+class ReversePolishNotation
 
   def initialize
     @stack = Stack.new
   end
 
-  def calculate(equation)
-    equation.components.each do |char|
+  def evaluate(data_input)
+    data_input.components.each do |char|
       if char =~ /\d/
         @stack.push(char)
       else

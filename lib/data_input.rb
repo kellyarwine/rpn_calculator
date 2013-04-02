@@ -1,4 +1,4 @@
-class Equation
+class DataInput
   attr_accessor :components
 
   def initialize(data)

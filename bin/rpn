@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'postfix'
+require 'data_input'
+require 'reverse_polish_notation'
 
-Postfix.new.calculate
+data_input = DataInput.new(ARGV[0])
+puts ReversePolishNotation.new.evaluate(data_input)
